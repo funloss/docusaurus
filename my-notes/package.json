@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prestart": "rm -rf docs && git clone --depth 1 --filter=blob:none --sparse https://github.com/funloss/funKnowledge.git temp-docs && cd temp-docs && git sparse-checkout set B站视频笔记 && cd .. && mv temp-docs/B站视频笔记 docs && rm -rf temp-docs && find docs -name '*.md' -exec sed -i '' 's/<br>/<br \\/>/g' {} \\;",
-    "prebuild": "rm -rf docs && git clone --depth 1 --filter=blob:none --sparse https://github.com/funloss/funKnowledge.git temp-docs && cd temp-docs && git sparse-checkout set B站视频笔记 && cd .. && mv temp-docs/B站视频笔记 docs && rm -rf temp-docs && find docs -name '*.md' -exec sed -i '' 's/<br>/<br \\/>/g' {} \\;",
+    "prestart": "rm -rf docs && git clone --depth 1 --filter=blob:none --sparse https://github.com/funloss/funKnowledge.git temp-docs && cd temp-docs && git sparse-checkout set B站视频笔记 && cd .. && mv temp-docs/B站视频笔记 docs && rm -rf temp-docs && find docs -name '*.md' -exec sed -i 's/<br>/<br \\/>/g' {} +",
+    "prebuild": "rm -rf docs && git clone --depth 1 --filter=blob:none --sparse https://github.com/funloss/funKnowledge.git temp-docs && cd temp-docs && git sparse-checkout set B站视频笔记 && cd .. && mv temp-docs/B站视频笔记 docs && rm -rf temp-docs && find docs -name '*.md' -exec sed -i 's/<br>/<br \\/>/g' {} +",
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",
