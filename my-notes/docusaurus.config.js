@@ -6,6 +6,67 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const fs = require('fs');
+const path = require('path');
+
+// 动态读取 docs 文件夹结构生成导航栏
+function generateNavbarItems() {
+  const navbarItems = [];
+  const docsPath = path.join(__dirname, 'docs');
+  
+  // 如果 docs 文件夹不存在（比如在构建前），返回空数组
+  if (!fs.existsSync(docsPath)) {
+    return navbarItems;
+  }
+  
+  // 读取 docs 下的所有一级文件夹
+  const categories = fs.readdirSync(docsPath)
+    .filter(item => {
+      const itemPath = path.join(docsPath, item);
+      return fs.statSync(itemPath).isDirectory() && !item.startsWith('.');
+    })
+    .sort();
+  
+  for (const category of categories) {
+    const categoryPath = path.join(docsPath, category);
+    
+    // 递归查找第一个 markdown 文件
+    function findFirstMarkdownFile(dir) {
+      const items = fs.readdirSync(dir).sort();
+      
+      for (const item of items) {
+        const itemPath = path.join(dir, item);
+        const stat = fs.statSync(itemPath);
+        
+        if (stat.isDirectory()) {
+          const result = findFirstMarkdownFile(itemPath);
+          if (result) return result;
+        } else if (item.endsWith('.md') || item.endsWith('.mdx')) {
+          return itemPath;
+        }
+      }
+      return null;
+    }
+    
+    const firstFile = findFirstMarkdownFile(categoryPath);
+    
+    if (firstFile) {
+      // 构建 URL 路径
+      const relativePath = path.relative(docsPath, firstFile);
+      const urlPath = relativePath
+        .replace(/\\/g, '/') // Windows 兼容
+        .replace(/\.mdx?$/, ''); // 移除扩展名
+      
+      navbarItems.push({
+        to: `/docs/${urlPath}`,
+        position: 'left',
+        label: category,
+      });
+    }
+  }
+  
+  return navbarItems;
+}
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -14,8 +75,6 @@ const config = {
   title: '知识笔记库',
   tagline: '记录学习的点滴，分享知识的乐趣',
   favicon: 'img/favicon.ico',
-
-  
 
   // Set the production url of your site here
   url: 'https://funloss.github.io',
@@ -32,7 +91,7 @@ const config = {
   onBrokenMarkdownLinks: 'warn',
 
   // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
+  // useful metadata like html lang. For example, if your Chinese, you
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'zh-Hans',
@@ -113,12 +172,7 @@ const config = {
           src: 'img/logo.svg',
         },
         items: [
-          {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: '笔记',
-          },
+          ...generateNavbarItems(),
           {
             href: 'https://github.com/funloss/funKnowledge',
             label: 'GitHub',
@@ -131,16 +185,10 @@ const config = {
         links: [
           {
             title: '笔记分类',
-            items: [
-              {
-                label: '小约翰可汗',
-                to: '/docs/小约翰可汗/奇葩小国/小约翰008-阿尔巴尼亚_BV1Uy4y1S7Eq',
-              },
-              {
-                label: '易经',
-                to: '/docs/易经/易经壹乾卦上龙的传人下龙德用九_BV14o4y1z7wE',
-              },
-            ],
+            items: generateNavbarItems().map(item => ({
+              label: item.label,
+              to: item.to,
+            })),
           },
           {
             title: '相关链接',
