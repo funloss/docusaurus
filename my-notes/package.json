@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prestart": "rm -rf docs && git clone --depth 1 --filter=blob:none --sparse https://github.com/funloss/funKnowledge.git temp-docs && cd temp-docs && git sparse-checkout set B站视频笔记 && cd .. && mv temp-docs/B站视频笔记 docs && rm -rf temp-docs && node scripts/fix-br-tags.js",
-    "prebuild": "rm -rf docs && git clone --depth 1 --filter=blob:none --sparse https://github.com/funloss/funKnowledge.git temp-docs && cd temp-docs && git sparse-checkout set B站视频笔记 && cd .. && mv temp-docs/B站视频笔记 docs && rm -rf temp-docs && node scripts/fix-br-tags.js",
+    "prestart": "rm -rf docs && git clone --depth 1 --filter=blob:none --sparse https://github.com/funloss/funKnowledge.git temp-docs && cd temp-docs && git sparse-checkout set 笔记 && cd .. && mv temp-docs/笔记 docs && rm -rf temp-docs && node scripts/fix-br-tags.js",
+    "prebuild": "rm -rf docs && git clone --depth 1 --filter=blob:none --sparse https://github.com/funloss/funKnowledge.git temp-docs && cd temp-docs && git sparse-checkout set 笔记 && cd .. && mv temp-docs/笔记 docs && rm -rf temp-docs && node scripts/fix-br-tags.js",
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
     "build": "docusaurus build",

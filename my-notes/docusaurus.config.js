@@ -108,7 +108,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/funloss/funKnowledge/tree/main/B站视频笔记/',
+            'https://github.com/funloss/funKnowledge/tree/main/笔记/',
           // 禁用数字前缀解析，保留完整文件名
           numberPrefixParser: false,
           sidebarItemsGenerator: async ({defaultSidebarItemsGenerator, ...args}) => {
@@ -174,7 +174,7 @@ const config = {
         items: [
           ...generateNavbarItems(),
           {
-            href: 'https://github.com/funloss/funKnowledge',
+            href: 'https://github.com/funloss/funKnowledge/tree/main/%E7%AC%94%E8%AE%B0',
             label: 'GitHub',
             position: 'right',
           },
@@ -195,7 +195,7 @@ const config = {
             items: [
               {
                 label: 'GitHub 仓库',
-                href: 'https://github.com/funloss/funKnowledge',
+                href: 'https://github.com/funloss/funKnowledge/tree/main/%E7%AC%94%E8%AE%B0',
               },
             ],
           },
